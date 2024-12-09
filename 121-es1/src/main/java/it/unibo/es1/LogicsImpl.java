@@ -2,6 +2,7 @@ package it.unibo.es1;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LogicsImpl implements Logics {
 
@@ -51,13 +52,9 @@ public class LogicsImpl implements Logics {
 
 	@Override
 	public String result() {
-		return "<<" +
-			this.values.stream()
-				.map(e -> Integer.toString(e))
-				.reduce((s1, s2) -> s1 + "|" + s2)
-				.orElseThrow()
-			+
-			">>";
+		return this.values.stream()
+				.map(String::valueOf)
+				.collect(Collectors.joining("|", "<<", ">>"));
 	}
 
 	@Override
