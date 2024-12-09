@@ -1,46 +1,67 @@
 package it.unibo.es1;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LogicsImpl implements Logics {
 
-	public LogicsImpl(int size) {
-		//TODO Auto-generated constructor stub
+	private final int size;
+	private final List<Integer> values;
+	private final List<Boolean> enablings;
+
+	public LogicsImpl(final int size) {
+		this.size = size;
+		this.values = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			this.values.add(0);
+		}
+		this.enablings = new ArrayList<>(size);
+		for (int i = 0; i < size; i++) {
+			this.enablings.add(true);
+		}
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'size'");
+		return this.size;
 	}
 
 	@Override
 	public List<Integer> values() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'values'");
+		return this.values;
 	}
 
 	@Override
 	public List<Boolean> enablings() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'enablings'");
+		return this.enablings;
 	}
 
 	@Override
 	public int hit(int elem) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'hit'");
+		final var value = this.values.get(elem);
+		if (value == this.size) {
+			return value;
+		}
+		if (value == this.size - 1) {
+			this.enablings.set(elem, false);
+		}
+		this.values.set(elem, value + 1);
+		return value + 1;
 	}
 
 	@Override
 	public String result() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'result'");
+		return "<<" +
+			this.values.stream()
+				.map(e -> Integer.toString(e))
+				.reduce((s1, s2) -> s1 + "|" + s2)
+				.orElseThrow()
+			+
+			">>";
 	}
 
 	@Override
 	public boolean toQuit() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'toQuit'");
+		return this.enablings.stream().allMatch(e -> e == false);
 	}
 }
