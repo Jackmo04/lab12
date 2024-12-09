@@ -14,7 +14,7 @@ public class GUI extends JFrame{
 
 	public GUI(int size){
 		final Logics logics = new LogicsImpl(size);
-		this.setSize(500, 100);
+		this.setSize(500, 200);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.getContentPane().setLayout(new FlowLayout());
 		
